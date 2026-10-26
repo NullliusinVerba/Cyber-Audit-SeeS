@@ -29,4 +29,4 @@ Este repositorio contiene la auditoría de seguridad y la remediación automatiz
 2. Ejecutar el playbook (solicitará la contraseña SSH y la de `sudo`):
 
 ```bash
-ansible-playbook -i ansible/inventory.ini ansible/hardening.yml -k -K```
+ansible-playbook -i ansible/inventory.ini ansible/hardening.yml -k -K
