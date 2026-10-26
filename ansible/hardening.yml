@@ -1,0 +1,24 @@
+---
+- name: Aplicar Hardening a SEES (OIV)
+  hosts: metasploitable
+  become: yes
+  tasks:
+    - name: Asegurar que SSH use algoritmos KEX modernos
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?KexAlgorithms'
+        line: "KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521"
+      notify: Reiniciar servicio SSH
+
+    - name: Prohibir el login de root por SSH
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin'
+        line: "PermitRootLogin no"
+      notify: Reiniciar servicio SSH
+
+  handlers:
+    - name: Reiniciar servicio SSH
+      service:
+        name: ssh
+        state: restarted
